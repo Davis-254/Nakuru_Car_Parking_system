@@ -1,0 +1,37 @@
+$sql = "SELECT CONCAT(myguests.firstname,' ',myguests.lastname) AS name, myguests.email, messages.message 
+From myguests 
+INNER JOIN messages 
+ON myguests.id = messages.id";
+
+<table>
+  <tr>
+    <td>   Name</td>
+    <td>   Email</td>
+    <td>   Message</td>
+    <!-- <td>   Message</td>
+    <td>   Date</td>!-->
+  </tr>
+<?php
+include 'crud.php';
+$sql = "SELECT CONCAT(myguests.firstname,' ',myguests.lastname) AS name, myguests.email, messages.message 
+    From myguests 
+    INNER JOIN messages 
+    ON myguests.id = messages.id";
+$result = selectdata($sql);
+  if($result != "zero")
+  {
+    while($row = $result->fetch_assoc())
+    {
+      echo "<tr>";
+      echo "<td>" . $row['name'] . "</td>";
+      echo "<td>" . $row['email'] . "</td>";
+      if($row['message'] === null){echo "<td>" .  'null'. "</td>";} else { echo "<td>" .  $row['message']. "</td>"; } ;
+      echo "</tr>";
+    }
+  }
+  else
+    {
+      echo $result;
+  }
+?>
+</table>
